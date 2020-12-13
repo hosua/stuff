@@ -1,0 +1,1 @@
+A simple autoclicker that lets you choose a random click interval from a given range.
