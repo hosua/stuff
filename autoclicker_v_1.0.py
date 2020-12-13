@@ -1,4 +1,4 @@
-import pyautogui, time, random, keyboard
+import pyautogui, random, keyboard, datetime
 import tkinter as tk
 
 root = tk.Tk()
@@ -48,12 +48,12 @@ def start_clicking_task(event=None):
 
 def start_clicking(event=None):
     global running
-    print(running)
     text1.config(state="normal")
+
     if running:
         min = min_var.get()
         max = max_var.get()
-
+        text1.insert(tk.INSERT, "\n" + "(" + '{:%H:%M:%S}'.format(datetime.datetime.now()) + ")")
         try:    # Show exception to user
             min = float(min)
             max = float(max)
@@ -63,6 +63,7 @@ def start_clicking(event=None):
         random_range_s_to_ms = int(random_range * 1000)     # Convert seconds to ms
         range_str_s = "{:,.2f}s".format(random_range)
         range_str_ms = "{:,.2f}ms".format(random_range_s_to_ms)
+        print("(" +'{:%H:%M:%S}'.format(datetime.datetime.now()))
         text1.insert(tk.INSERT, "\nTime since last click: " + range_str_s + " (" + range_str_ms + ")\n")
         pyautogui.click()
         root.after(random_range_s_to_ms, start_clicking)    # Recursively call start_clicking`
@@ -74,6 +75,7 @@ def stop_clicking(event=None):
     global running
     text1.config(state="normal")
     if running is True:
+        text1.insert(tk.INSERT, "\n" + "(" + '{:%H:%M:%S}'.format(datetime.datetime.now()) + ")")
         text1.insert(tk.INSERT, "\nStopping...\n")
         running = False
     text1.see("end")
