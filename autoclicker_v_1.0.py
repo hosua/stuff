@@ -1,6 +1,7 @@
 import pyautogui, random, keyboard, datetime
 import tkinter as tk
 
+
 root = tk.Tk()
 root.configure(bg='#0A3D62')    # Change BG color
 root.title('Autoclicker')
@@ -33,23 +34,23 @@ reg = root.register(checkNum) # Make sure to check this register AFTER initializ
 min_var_entry.config(validate="key", validatecommand=(reg, '%P'))    # Only call when a "key" is pressed
 max_var_entry.config(validate="key", validatecommand=(reg, '%P'))
 # NOTE FOR FUTURE REFERENCE
-# When using global inside a function, you must always specify that it's a global variable
+# When using global inside a function, you must always s`pecify that it's a global variable
 # inside of every function you use it in. Global functions are defined outside the scope
 # of all functions.
 running = False
-
+global startTime
 
 def start_clicking_task(event=None):
-    global running
+    global running, startTime
     if running is False:
         running = True
         start_clicking()
 
 
 def start_clicking(event=None):
-    global running
-    text1.config(state="normal")
+    global running, startTime
 
+    text1.config(state="normal")
     if running:
         min = min_var.get()
         max = max_var.get()
@@ -62,9 +63,10 @@ def start_clicking(event=None):
         random_range = random.uniform(min, max)
         random_range_s_to_ms = int(random_range * 1000)     # Convert seconds to ms
         range_str_s = "{:,.2f}s".format(random_range)
-        range_str_ms = "{:,.2f}ms".format(random_range_s_to_ms)
+        range_str_ms = "{:,.0f}ms".format(random_range_s_to_ms)
         print("(" +'{:%H:%M:%S}'.format(datetime.datetime.now()))
         text1.insert(tk.INSERT, "\nTime since last click: " + range_str_s + " (" + range_str_ms + ")\n")
+
         pyautogui.click()
         root.after(random_range_s_to_ms, start_clicking)    # Recursively call start_clicking`
     text1.see("end")
