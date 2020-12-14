@@ -1,4 +1,4 @@
-import pyautogui, random, keyboard, datetime
+import pyautogui, random, keyboard, datetime, time
 import tkinter as tk
 
 
@@ -48,13 +48,14 @@ def start_clicking_task(event=None):
 
 
 def start_clicking(event=None):
-    global running, startTime
-
+    global running
+    timer_start = time.perf_counter()
     text1.config(state="normal")
     if running:
         min = min_var.get()
         max = max_var.get()
         text1.insert(tk.INSERT, "\n" + "(" + '{:%H:%M:%S}'.format(datetime.datetime.now()) + ")")
+
         try:    # Show exception to user
             min = float(min)
             max = float(max)
@@ -62,13 +63,21 @@ def start_clicking(event=None):
             text1.insert(tk.INSERT, "One or both of your inputs are invalid.")
         random_range = random.uniform(min, max)
         random_range_s_to_ms = int(random_range * 1000)     # Convert seconds to ms
-        range_str_s = "{:,.2f}s".format(random_range)
-        range_str_ms = "{:,.0f}ms".format(random_range_s_to_ms)
         print("(" +'{:%H:%M:%S}'.format(datetime.datetime.now()))
-        text1.insert(tk.INSERT, "\nTime since last click: " + range_str_s + " (" + range_str_ms + ")\n")
+        timer_end = time.perf_counter()
+        time_difference = (timer_end - timer_start)     # In seconds
+        timer_real = time_difference + random_range     # All in seconds
+        timer_real_s_to_ms = timer_real * 1000      # s to ms = x * 1000
+        timer_real_str_s = "{:,.3f}s".format(timer_real)
+        timer_real_str_ms = "{:,.0f}ms".format(timer_real_s_to_ms)
+        text1.insert(tk.INSERT, "\nNext click will be in: " + timer_real_str_s + " (" + timer_real_str_ms + ")\n")
 
+
+        print("time_difference: " + str(time_difference) + "s timer_start: "
+              + str(timer_start) + "s timer_end: " + str(timer_end) + "s ")
         pyautogui.click()
         root.after(random_range_s_to_ms, start_clicking)    # Recursively call start_clicking`
+        timer_end = 0
     text1.see("end")
     text1.config(state="disabled")
 
