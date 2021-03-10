@@ -1,4 +1,4 @@
-Here is a quick summary of what each program in the repository does
+Here is a quick summary of what each program here does
 ---------------------------------------------------------------------
 
 Autoclicker - A simple autoclicker that lets you choose a random click interval from a given range.
