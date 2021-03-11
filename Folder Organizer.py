@@ -1,6 +1,5 @@
 import os, string, shutil
 # This program organizes every file in the directory into alphabetized folders.
-#
 root = input("Enter the directory path you want to organize")
 backup = input("Do you want to backup your original files? (Y/N)").lower()
 if backup == "y":
@@ -48,13 +47,12 @@ for file in os.listdir(root):
                 print("Moving " + file + " to " + dir_backup_folder)   # use this if you want to make a backup folder
         else:
             new_path = os.path.join(dir_organized_folder, "#")
-            print(new_path)
-            if not make_backup:
-                shutil.move(file, new_path)
-                print("Moving " + file + " to " + new_path)
-            else:
-                shutil.move(file, dir_backup_folder)
+            if make_backup:
+                shutil.copy(file, dir_backup_folder)
                 print("Moving " + file + " to " + dir_backup_folder)
+            shutil.move(file, new_path)
+            print("Moving " + file + " to " + new_path)
+
 
 os.chdir(dir_organized_folder)  # Go into the new organized folder
 for directory in os.listdir(dir_organized_folder):  # Delete any directories that are empty
