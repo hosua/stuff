@@ -9,7 +9,7 @@ Coin Flipper - Flips heads or tails randomly with user-defined trial size and nu
 
 Folder Organizer - Takes every file in a directory and organizes it into folders from #, A, B, C through Z and removes any empty folders that result from this process. This is useful full organizing folders containing many files (in my case, a huge folder containing emulator ROMs)
 
-Folder Extractor - Basically undoes what the Folder Organizer does and moves every file within a directory back to the root directory. WARNING: If you do use this, the program does NOT handle directories within directories and will error out if you try this (it will backup your data first, however)
+Folder Extractor - Basically the reverse process of the Folder Organizer. Program moves every file within a directory back to the root directory. WARNING: If you do use this, the program does NOT handle directories within directories and will error out if you try this (it will backup your data first, however)
 
 Roulette Simulator - A text-based roulette simulator game
 
